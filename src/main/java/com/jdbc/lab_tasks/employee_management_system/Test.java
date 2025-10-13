@@ -6,14 +6,26 @@ public class Test {
     static Scanner sc = new Scanner(System.in);
 static  Employee ref;
     public static void main(String[] args) {
-        int choice = sc.nextInt();
-        sc.nextLine();
-        switch (choice) {
-            case 1 -> Test.insert();
-            case 2-> Test.update();
-            case 3->Test.delete();
-            case 4->EmployeeServices.displayDetails(ref);
-            default -> throw new RuntimeException("deee");
+        while (true){
+            System.out.println("===== EMPLOYEE MANAGEMENT SYSTEM =====\n" +
+                    "1. Add Employee\n" +
+                    "2. Update Employee details\n" +
+                    "3. Delete Employee\n" +
+                    "4. View All Employees\n" +
+                    "5. Exit");
+            int choice = sc.nextInt();
+            sc.nextLine();
+            switch (choice) {
+                case 1 ->Test.insert();
+                case 2->Test.update();
+                case 3->Test.delete();
+                case 4->EmployeeServices.displayDetails(ref);
+                case 5->{
+                    System.out.println("=".repeat(25)+"Thank you!visit Again!!!"+"=".repeat(25));
+                        System.exit(0);
+                }
+                default -> throw new RuntimeException("invalid options");
+            }
         }
     }
 
