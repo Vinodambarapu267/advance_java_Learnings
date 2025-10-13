@@ -1,0 +1,35 @@
+package com.jdbc.lab_tasks.employee_management_system;
+
+import java.util.Scanner;
+
+public class Test {
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice) {
+            case 1 -> Test.insert();
+            default -> throw new RuntimeException("deee");
+        }
+    }
+
+    public static void insert() {
+        int insertRows;
+        System.out.println("Enter name");
+        String name = sc.nextLine();
+
+        System.out.println("Enter salary");
+        double salary = Double.parseDouble(sc.nextLine());
+        System.out.println("Enter dept");
+        String dept = sc.nextLine();
+        Employee emp = new Employee(name, salary, dept);
+        insertRows = EmployeeServices.insert(emp);
+        if (insertRows > 0) {
+            System.out.println(insertRows + " rows inserted");
+        } else {
+            System.out.println("no rows inserted");
+        }
+    }
+}
+
