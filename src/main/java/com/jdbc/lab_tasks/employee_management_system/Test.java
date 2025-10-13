@@ -10,6 +10,7 @@ public class Test {
         sc.nextLine();
         switch (choice) {
             case 1 -> Test.insert();
+            case 2-> Test.update();
             default -> throw new RuntimeException("deee");
         }
     }
@@ -18,7 +19,6 @@ public class Test {
         int insertRows;
         System.out.println("Enter name");
         String name = sc.nextLine();
-
         System.out.println("Enter salary");
         double salary = Double.parseDouble(sc.nextLine());
         System.out.println("Enter dept");
@@ -29,6 +29,18 @@ public class Test {
             System.out.println(insertRows + " rows inserted");
         } else {
             System.out.println("no rows inserted");
+        }
+    }
+    public  static void update(){
+        int updateRows;
+        System.out.println("Enter  name ");
+        String  name = sc.nextLine();
+        updateRows = EmployeeServices.update(name);
+        if (updateRows>0){
+            System.out.println(updateRows+" rows updated");
+        }
+        else {
+            System.out.println("no rows updated");
         }
     }
 }
