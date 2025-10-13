@@ -1,10 +1,8 @@
 package com.jdbc.lab_tasks.employee_management_system;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 
 public class EmployeeServices {
         private static final String driverName ="oracle.jdbc.driver.OracleDriver";
@@ -91,7 +89,50 @@ public class EmployeeServices {
             }
             return deleteRows;
         }
-        public void displayDetails(Employee emp){
+        public static void displayDetails(Employee emp){
+            try {
+                Class.forName(driverName);
+                Connection con = DriverManager.getConnection(url,userName,pass);
+                String  displayDetails = """
+                        select id, name, salary, department from employee 
+                        order by id""";
+              Statement stmt = con.createStatement();
+
+              ResultSet rs = stmt.executeQuery(displayDetails);
+              ResultSetMetaData rsmd  = rs.getMetaData();
+              int count=0;
+              if (rs.next()){
+                  String frmS = "";
+                  for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                      if (rsmd.getColumnTypeName(i).contains("var")) {
+                          frmS = "%" + Math.max(rsmd.getColumnDisplaySize(i), rsmd.getPrecision(i)) + "s";
+                      } else {
+                          frmS = "%-" + Math.max(rsmd.getColumnName(i).length(), rsmd.getPrecision(i)) + "s ";
+                      }
+                      System.out.printf(frmS, rsmd.getColumnName(i));
+
+                  }System.out.println();
+                  System.out.println("-".repeat(rsmd.getPrecision(1)) + " " + "-".repeat(rsmd.getPrecision(2)) + " " + "-".repeat(rsmd.getPrecision(3)) + " " + "-".repeat(rsmd.getColumnName(4).length()));
+                  do {
+                      for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                          if (rsmd.getColumnTypeName(i).contains("var")) {
+                              frmS = "%" + Math.max(rsmd.getColumnDisplaySize(i), rsmd.getPrecision(i)) + "s";
+                          } else {
+                              frmS = "%-" + Math.max(rsmd.getColumnName(i).length(), rsmd.getPrecision(i)) + "s ";
+                          }
+                          System.out.printf(frmS, rs.getString(i));
+                      }
+                      System.out.println();
+                      count++;
+                  } while (rs.next());
+                  System.out.println("\n " + count + " rows selected");
+                  System.out.println("✅ View all stored employees\n");
+              } else {
+                  System.out.println(" no rows selected");
+              }
+            } catch (ClassNotFoundException | SQLException e) {
+                throw new RuntimeException(e);
+            }
 
         }
     }

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Test {
     static Scanner sc = new Scanner(System.in);
-
+static  Employee ref;
     public static void main(String[] args) {
         int choice = sc.nextInt();
         sc.nextLine();
@@ -12,6 +12,7 @@ public class Test {
             case 1 -> Test.insert();
             case 2-> Test.update();
             case 3->Test.delete();
+            case 4->EmployeeServices.displayDetails(ref);
             default -> throw new RuntimeException("deee");
         }
     }
@@ -28,10 +29,12 @@ public class Test {
         insertRows = EmployeeServices.insert(emp);
         if (insertRows > 0) {
             System.out.println(insertRows + " rows inserted");
+            System.out.println("✅ Add new employees");
         } else {
             System.out.println("no rows inserted");
         }
     }
+
     public  static void update(){
         int updateRows;
         System.out.println("Enter  name ");
@@ -39,11 +42,13 @@ public class Test {
         updateRows = EmployeeServices.update(name);
         if (updateRows>0){
             System.out.println(updateRows+" rows updated");
+            System.out.println("✅ Update an existing employee’s");
         }
         else {
             System.out.println("no rows updated");
         }
     }
+
     public static  void delete(){
         int deleteRows;
         System.out.println("Enter name: ");
@@ -51,6 +56,7 @@ public class Test {
         deleteRows= EmployeeServices.delete(name);
         if (deleteRows>0){
             System.out.println(deleteRows+" rows deleted");
+            System.out.println("✅ Delete specific employees");
         }else {
             System.out.println("No rows deleted");
         }
