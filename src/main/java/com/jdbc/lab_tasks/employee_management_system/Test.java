@@ -11,6 +11,7 @@ public class Test {
         switch (choice) {
             case 1 -> Test.insert();
             case 2-> Test.update();
+            case 3->Test.delete();
             default -> throw new RuntimeException("deee");
         }
     }
@@ -41,6 +42,17 @@ public class Test {
         }
         else {
             System.out.println("no rows updated");
+        }
+    }
+    public static  void delete(){
+        int deleteRows;
+        System.out.println("Enter name: ");
+        String name = sc.nextLine();
+        deleteRows= EmployeeServices.delete(name);
+        if (deleteRows>0){
+            System.out.println(deleteRows+" rows deleted");
+        }else {
+            System.out.println("No rows deleted");
         }
     }
 }

@@ -76,8 +76,20 @@ public class EmployeeServices {
 
             return updateRows;
         }
-        public int delete(Employee emp){
-            return 0;
+        public static int delete(String  name){
+            int deleteRows;
+            try {
+
+                Class.forName(driverName);
+                Connection con= DriverManager.getConnection(url,userName,pass);
+                String deleteQuery ="delete employee where name=?";
+                PreparedStatement deletePstmt= con.prepareStatement(deleteQuery);
+                deletePstmt.setString(1,name);
+                deleteRows = deletePstmt.executeUpdate();
+            } catch (ClassNotFoundException |SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return deleteRows;
         }
         public void displayDetails(Employee emp){
 
