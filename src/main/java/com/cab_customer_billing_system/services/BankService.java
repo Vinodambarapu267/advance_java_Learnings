@@ -8,8 +8,8 @@ public interface BankService {
     public void addCustomer(BankCustomer cust);
     public void fetchCustomerDetails(long accountNumber);
     public void deleteCustomer(BankCustomer cust);
-    public double depositAmount(BankCustomer cust);
-    public double withdraw(BankCustomer cust);
+    public double depositAmount(long accNum,double amount);
+    public double withdraw(long accNum,double amount);
     public double viewBalance(long accNumber);
-    public Blob updatePhoto(Blob photo,long accountNumber);
+    public void updatePhoto(Blob photo, long accountNumber);
 }

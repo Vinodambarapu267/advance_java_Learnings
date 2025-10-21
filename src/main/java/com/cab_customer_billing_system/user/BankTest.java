@@ -55,6 +55,14 @@ public class BankTest {
                 long accNum = sc.nextLong();
                 bankService.fetchCustomerDetails(accNum);
             }
+            case 5->{
+                System.out.println("Enter the account number");
+                long accNum = sc.nextLong();
+                System.out.println("Enter tha amount to withdraw");
+                double amount = sc.nextDouble();
+                bankService.withdraw(accNum,amount);
+
+            }
             case 6->{
                 System.out.println("Enter the account number");
                 long accNum = sc.nextLong();
@@ -63,7 +71,7 @@ public class BankTest {
                   System.out.println("current balance : "+balance);
               }
             }
-            case 5->{
+            case 7->{
                 System.out.println("Enter account Number");
                 long accNum = sc.nextLong();
                 sc.nextLine();
