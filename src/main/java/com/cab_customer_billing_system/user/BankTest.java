@@ -3,10 +3,15 @@ package com.cab_customer_billing_system.user;
 import com.cab_customer_billing_system.model.BankCustomer;
 
 import com.cab_customer_billing_system.services.BankServiceImpl;
+import com.connection.OracleCon;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class BankTest {
@@ -42,6 +47,15 @@ public class BankTest {
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
+            }
+            case 2->
+            {
+                System.out.println("Enter the account number");
+                long accNum = sc.nextLong();
+                bankService.fetchCustomerDetails(accNum);
+            }
+            case 5->{
+
             }
         }
     }

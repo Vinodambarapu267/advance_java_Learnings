@@ -6,10 +6,10 @@ import java.sql.Blob;
 
 public interface BankService {
     public void addCustomer(BankCustomer cust);
-    public void fetchCustomerDetails(BankCustomer cust);
+    public void fetchCustomerDetails(long accountNumber);
     public void deleteCustomer(BankCustomer cust);
     public double depositAmount(BankCustomer cust);
     public double withdraw(BankCustomer cust);
-    public double viewBalance(BankCustomer cust);
-    public Blob updatePhoto(BankCustomer cust);
+    public double viewBalance(long accNumber ,double balance);
+    public Blob updatePhoto(Blob photo,long accountNumber);
 }
