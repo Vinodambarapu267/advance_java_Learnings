@@ -1,9 +1,8 @@
-package com.cab_customer_billing_system.user;
+package com.banking_system.user;
 
-import com.cab_customer_billing_system.model.BankCustomer;
+import com.banking_system.model.BankCustomer;
 
-import com.cab_customer_billing_system.services.BankService;
-import com.cab_customer_billing_system.services.BankServiceImpl;
+import com.banking_system.services.BankServiceImpl;
 import com.connection.OracleCon;
 
 import java.io.File;

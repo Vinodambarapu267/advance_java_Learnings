@@ -1,6 +1,6 @@
-package com.cab_customer_billing_system.services;
+package com.banking_system.services;
 
-import com.cab_customer_billing_system.model.BankCustomer;
+import com.banking_system.model.BankCustomer;
 
 import java.sql.Blob;
 

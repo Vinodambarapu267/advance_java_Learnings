@@ -1,4 +1,4 @@
-package com.cab_customer_billing_system.model;
+package com.banking_system.model;
 
 import java.io.FileInputStream;
 
