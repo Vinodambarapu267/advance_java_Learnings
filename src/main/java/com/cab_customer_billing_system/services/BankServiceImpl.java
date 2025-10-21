@@ -62,6 +62,7 @@ public class BankServiceImpl implements BankService {
             throw new RuntimeException("Error fetching customer details", e);
         }
     }
+
     @Override
     public void deleteCustomer(BankCustomer cust) {
 
@@ -78,24 +79,41 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public double viewBalance(long accNumber ,double balance) {
-        return 0;
+    public double viewBalance(long accNumber) {
+        double output = 0;
+        Connection con = OracleCon.getConnection();
+        String query = "select balance from bank where account_no=?";
+        try (PreparedStatement pst = con.prepareStatement(query);) {
+            pst.setLong(1, accNumber);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                     output= rs.getDouble("balance");
+
+                } else {
+                    System.out.println("No account found with number" + accNumber);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving balance for account: " + accNumber, e);
+        }
+
+        return output;
     }
 
     @Override
-    public Blob updatePhoto(Blob photo,long accountNumber) {
-        Connection con =OracleCon.getConnection();
+    public Blob updatePhoto(Blob photo, long accountNumber) {
+        Connection con = OracleCon.getConnection();
         String updateQuery = "update bank set photo=? where account_no=?";
-        try (PreparedStatement updatePstmt=con.prepareStatement(updateQuery)){
-            updatePstmt.setBlob(1,photo);
-            updatePstmt.setLong(2,accountNumber);
+        try (PreparedStatement updatePstmt = con.prepareStatement(updateQuery)) {
+            updatePstmt.setBlob(1, photo);
+            updatePstmt.setLong(2, accountNumber);
             int rowsUpdated = updatePstmt.executeUpdate();
-            if (rowsUpdated>0){
+            if (rowsUpdated > 0) {
                 System.out.println("Photo updated successfully for account: " + accountNumber);
-            }else {
-                System.out.println("no customer not found with this Account number"+accountNumber);
+            } else {
+                System.out.println("no customer not found with this Account number" + accountNumber);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Error updating photo for account " + accountNumber, e);
         }
         return photo;

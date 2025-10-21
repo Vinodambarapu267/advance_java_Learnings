@@ -10,6 +10,6 @@ public interface BankService {
     public void deleteCustomer(BankCustomer cust);
     public double depositAmount(BankCustomer cust);
     public double withdraw(BankCustomer cust);
-    public double viewBalance(long accNumber ,double balance);
+    public double viewBalance(long accNumber);
     public Blob updatePhoto(Blob photo,long accountNumber);
 }

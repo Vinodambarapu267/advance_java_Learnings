@@ -2,6 +2,7 @@ package com.cab_customer_billing_system.user;
 
 import com.cab_customer_billing_system.model.BankCustomer;
 
+import com.cab_customer_billing_system.services.BankService;
 import com.cab_customer_billing_system.services.BankServiceImpl;
 import com.connection.OracleCon;
 
@@ -53,6 +54,14 @@ public class BankTest {
                 System.out.println("Enter the account number");
                 long accNum = sc.nextLong();
                 bankService.fetchCustomerDetails(accNum);
+            }
+            case 6->{
+                System.out.println("Enter the account number");
+                long accNum = sc.nextLong();
+              double balance =   bankService.viewBalance(accNum);
+              if (balance>=0){
+                  System.out.println("current balance : "+balance);
+              }
             }
             case 5->{
                 System.out.println("Enter account Number");
