@@ -55,7 +55,33 @@ public class BankTest {
                 bankService.fetchCustomerDetails(accNum);
             }
             case 5->{
+                System.out.println("Enter account Number");
+                long accNum = sc.nextLong();
+                sc.nextLine();
+                System.out.println("Enter the photo path:");
+                String path = sc.nextLine();
+                String filePath = path.replace("\"","").trim();
+                File file  = new File(filePath);
 
+                try (FileInputStream fis = new FileInputStream(file)) {
+                    // Read file content into byte array
+                    byte[] photoBytes = fis.readAllBytes();
+
+                    // Create a Blob from the connection
+                    Connection con = OracleCon.getConnection();
+                    Blob photoBlob = con.createBlob();
+                    photoBlob.setBytes(1, photoBytes); // Write bytes starting at position 1
+
+                    // Now pass the Blob (not FileInputStream) to the service
+                    bankService.updatePhoto(photoBlob, accNum);
+
+                } catch (FileNotFoundException e) {
+                    System.err.println("Error: Photo file not found at path: " + filePath);
+                } catch (SQLException e) {
+                    System.err.println("Database error: " + e.getMessage());
+                } catch (IOException e) {
+                    System.err.println("Error reading file: " + e.getMessage());
+                }
             }
         }
     }

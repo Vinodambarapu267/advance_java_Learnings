@@ -84,7 +84,20 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Blob updatePhoto(Blob photo,long accountNumber) {
-
-        return null;
+        Connection con =OracleCon.getConnection();
+        String updateQuery = "update bank set photo=? where account_no=?";
+        try (PreparedStatement updatePstmt=con.prepareStatement(updateQuery)){
+            updatePstmt.setBlob(1,photo);
+            updatePstmt.setLong(2,accountNumber);
+            int rowsUpdated = updatePstmt.executeUpdate();
+            if (rowsUpdated>0){
+                System.out.println("Photo updated successfully for account: " + accountNumber);
+            }else {
+                System.out.println("no customer not found with this Account number"+accountNumber);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException("Error updating photo for account " + accountNumber, e);
+        }
+        return photo;
     }
 }
