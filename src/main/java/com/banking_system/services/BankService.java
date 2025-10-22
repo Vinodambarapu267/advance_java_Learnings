@@ -7,7 +7,7 @@ import java.sql.Blob;
 public interface BankService {
     public void addCustomer(BankCustomer cust);
     public void fetchCustomerDetails(long accountNumber);
-    public void deleteCustomer(BankCustomer cust);
+    public void deleteCustomer(long accNumber);
     public double depositAmount(long accNum,double amount);
     public double withdraw(long accNum,double amount);
     public double viewBalance(long accNumber);

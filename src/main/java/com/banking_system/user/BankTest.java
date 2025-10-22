@@ -54,6 +54,18 @@ public class BankTest {
                 long accNum = sc.nextLong();
                 bankService.fetchCustomerDetails(accNum);
             }
+            case 4->{
+                System.out.println("Enter the account number");
+                long acc=sc.nextLong();
+                System.out.println("Enter the amount to deposit");
+                double  deposit = sc.nextDouble();
+               double  balance = bankService.depositAmount(acc,deposit);
+               if (balance>0){
+                   System.out.println("deposit successful: "+balance);
+               }else {
+                   System.out.println("deposit failed");
+               }
+            }
             case 5->{
                 System.out.println("Enter the account number");
                 long accNum = sc.nextLong();

@@ -64,13 +64,48 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public void deleteCustomer(BankCustomer cust) {
+    public void deleteCustomer(long accNumber) {
+        Connection con= OracleCon.getConnection();
+        String  deleteQuery = "delete from bank where account_no=? ";
+        try {
+            PreparedStatement  pstmt = con.prepareStatement(deleteQuery);
+            pstmt.setLong(1,accNumber);
+           int deleteRows = pstmt.executeUpdate();
+           if (deleteRows>0){
+               System.out.println(deleteRows+" rows deleted");
+           }else {
+               System.out.println("no row deleted");
+           }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
     @Override
     public double depositAmount(long accNum, double amount) {
-        return 0;
+        Connection con = OracleCon.getConnection();
+
+        double newBalance=0.0;
+        String selectQuery = "select balance from bank where account_no=?";
+        String query = "update bank set balance=balance+? where account_no=?";
+       try{
+           PreparedStatement selectPsmt= con.prepareStatement(selectQuery);
+           PreparedStatement depositPstmt = con.prepareStatement(query);
+           selectPsmt.setLong(1,accNum);
+           ResultSet rs = selectPsmt.executeQuery();
+           if (rs.next()){
+               double currentBalance = rs.getDouble("balance");
+               depositPstmt.setDouble(1,amount);
+               depositPstmt.setLong(2,accNum);
+               depositPstmt.executeUpdate();
+               newBalance = currentBalance+amount;
+           }
+       } catch (SQLException e) {
+           throw new RuntimeException(e);
+       }
+        return newBalance;
     }
 
     @Override
