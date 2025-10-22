@@ -54,6 +54,11 @@ public class BankTest {
                 long accNum = sc.nextLong();
                 bankService.fetchCustomerDetails(accNum);
             }
+            case 3->{
+                System.out.println("Enter the account number: ");
+                long acc= sc.nextLong();
+                bankService.deleteCustomer(acc);
+            }
             case 4->{
                 System.out.println("Enter the account number");
                 long acc=sc.nextLong();
