@@ -13,13 +13,31 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
-
+//add customer
+//fetch details
+//delete customer
+//deposit
+//withdraw
+//check balance
+//update photo
+//exit
 public class BankTest {
     public static void main(String[] args) {
         BankServiceImpl bankService = new BankServiceImpl();
         Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-        switch (choice) {
+
+        while (true) {
+            System.out.println("=== BANK ACCOUNT MENU ===\n" +
+                    "1. Add Customer\n" +
+                    "2. Fetch Customer Details\n" +
+                    "3. Delete Customer\n" +
+                    "4. Deposit Amount\n" +
+                    "5. Withdraw Amount\n" +
+                    "6. View Balance\n" +
+                    "7. Update Photo\n" +
+                    "8. Exit");
+            int choice = sc.nextInt();
+            switch (choice) {
             case 1 -> {
                 System.out.println("Enter the account Number:");
                 long accNum = sc.nextLong();
@@ -116,6 +134,12 @@ public class BankTest {
                     System.err.println("Error reading file: " + e.getMessage());
                 }
             }
+            case 8->{
+                System.out.println("=============== Thank you ===============");
+                System.exit(1);
+            }
+
         }
+    }
     }
 }
