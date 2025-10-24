@@ -2,6 +2,7 @@ package com.banking_system.services;
 
 import com.banking_system.model.BankCustomer;
 import com.connection.OracleCon;
+import oracle.jdbc.proxy.annotation.Pre;
 
 import java.io.*;
 import java.sql.*;
@@ -40,9 +41,7 @@ public class BankServiceImpl implements BankService {
             pstmt.setLong(1, accountNumber);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) { // Navigate to the first row
-
                     Blob photoBlob = rs.getBlob("photo"); // Column 7
-
                     // Save photo to file
                     File photoDir = new File("C:\\Users\\ambar\\OneDrive\\Desktop\\my folder\\photos\\downloaded");
                     if (!photoDir.exists()) photoDir.mkdirs();
@@ -183,5 +182,47 @@ public class BankServiceImpl implements BankService {
         } catch (SQLException e) {
             throw new RuntimeException("Error updating photo for account " + accountNumber, e);
         }
+    }
+
+    @Override
+    public void transferMoney(long senderAccountNum, long receiverAccount,double amount) {
+        Connection con = OracleCon.getConnection();
+
+        String  selectQuery = "select BALANCE from bank where ACCOUNT_NO=?";
+        String debitQuery ="update bank set BALANCE=BALANCE-? where ACCOUNT_NO=?";
+        String depositQuery = "update bank set BALANCE=BALANCE+? where ACCOUNT_NO=?";
+        try {
+            con.setAutoCommit(false);
+            PreparedStatement ps1=con.prepareStatement(selectQuery);
+            ps1.setLong(1,senderAccountNum);
+          ResultSet rs  =ps1.executeQuery();
+            if (rs.next()){
+                double currentBalance = rs.getDouble("BALANCE");
+                if (!(currentBalance >= amount)) {
+                    System.out.println("insufficient Balance");
+                }else {
+                    PreparedStatement ps2 = con.prepareStatement(debitQuery);
+                    ps2.setLong(2,senderAccountNum);
+                    ps2.setDouble(1,amount);
+                   int debited =  ps2.executeUpdate();
+                   if (debited>0){
+                       PreparedStatement ps3 = con.prepareStatement(depositQuery);
+                       ps3.setDouble(1,amount);
+                       ps3.setLong(2,receiverAccount);
+                      int deposit =  ps3.executeUpdate();
+                       if (deposit>0){
+                           con.commit();
+                           System.out.println("Transaction successful");
+                       }else {
+                           System.out.println("Transaction failed");
+                           con.rollback();
+                       }
+                   }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

@@ -12,4 +12,5 @@ public interface BankService {
     public double withdraw(long accNum,double amount);
     public double viewBalance(long accNumber);
     public void updatePhoto(Blob photo, long accountNumber);
+    public void transferMoney(long senderAccountNum, long receiverAccount,double amount);
 }

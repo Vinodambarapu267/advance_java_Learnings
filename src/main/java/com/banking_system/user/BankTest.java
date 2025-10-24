@@ -2,6 +2,7 @@ package com.banking_system.user;
 
 import com.banking_system.model.BankCustomer;
 
+import com.banking_system.services.BankService;
 import com.banking_system.services.BankServiceImpl;
 import com.connection.OracleCon;
 
@@ -23,7 +24,7 @@ import java.util.Scanner;
 //exit
 public class BankTest {
     public static void main(String[] args) {
-        BankServiceImpl bankService = new BankServiceImpl();
+        BankService bankService = new BankServiceImpl();
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -35,7 +36,8 @@ public class BankTest {
                     "5. Withdraw Amount\n" +
                     "6. View Balance\n" +
                     "7. Update Photo\n" +
-                    "8. Exit");
+                    "8. Transfer money\n"+
+                    "9. Exit");
             int choice = sc.nextInt();
             switch (choice) {
             case 1 -> {
@@ -135,6 +137,15 @@ public class BankTest {
                 }
             }
             case 8->{
+                    System.out.println("Enter the sender Account Number:");
+                    long sendAcc = sc.nextLong();
+                    System.out.println("Enter the receiver Account Number: ");
+                    long receiverAcc= sc.nextLong();
+                    System.out.println("Enter the amount:");
+                    double amount = sc.nextDouble();
+                    bankService.transferMoney(sendAcc,receiverAcc,amount);
+            }
+            case 9->{
                 System.out.println("=============== Thank you ===============");
                 System.exit(1);
             }
